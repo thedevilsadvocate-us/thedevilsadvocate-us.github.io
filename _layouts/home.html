@@ -1,0 +1,121 @@
+---
+layout: default
+---
+
+{% assign posts = paginator.posts | default: site.posts %}
+{% assign featured = posts.first %}
+{% assign rest = posts | shift %}
+
+<!-- ── FEATURED STORY ── -->
+{% if featured %}
+<div class="featured-story">
+
+  <div class="featured-image {% if featured.category %}cat-img-{{ featured.category | downcase | replace: '.', '' | replace: ' ', '-' }}{% endif %}">
+    {% if featured.image %}
+      <img src="{{ featured.image }}" alt="{{ featured.title }}">
+    {% else %}
+      NO IMAGE
+    {% endif %}
+  </div>
+
+  <div class="featured-content">
+    <div class="featured-meta">
+      {% if featured.breaking %}
+        <span class="badge badge-breaking">Breaking</span>
+      {% endif %}
+      {% if featured.category %}
+        <span class="badge badge-category">{{ featured.category }}</span>
+      {% endif %}
+      {% if featured.read_time %}
+        <span class="featured-read-time">{{ featured.read_time }} min read</span>
+      {% endif %}
+    </div>
+
+    <a href="{{ featured.url }}">
+      <div class="featured-title">{{ featured.title }}</div>
+    </a>
+
+    <div class="featured-excerpt">
+      {{ featured.excerpt | strip_html | truncate: 200 }}
+    </div>
+
+    {% if featured.da_take %}
+    <div class="da-take">
+      <strong>Devil's Advocate take:</strong> {{ featured.da_take }}
+    </div>
+    {% endif %}
+
+    <div class="featured-date">
+      {{ featured.date | date: "%B %-d, %Y" }}
+      {% if featured.date %}
+        &middot;
+        {% assign diff_seconds = 'now' | date: '%s' | minus: featured.date_published %}
+        {% if diff_seconds < 3600 %}
+          Just now
+        {% elsif diff_seconds < 86400 %}
+          {{ diff_seconds | divided_by: 3600 }} hours ago
+        {% elsif diff_seconds < 172800 %}
+          Yesterday
+        {% else %}
+          {{ diff_seconds | divided_by: 86400 }} days ago
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+<!-- ── LATEST STORIES ── -->
+{% if rest.size > 0 %}
+<div class="section-label">
+  <span>LATEST STORIES</span>
+  <div class="section-line"></div>
+</div>
+
+<div class="article-grid">
+  {% for post in rest %}
+  <a href="{{ post.url }}" style="text-decoration: none;">
+    <div class="article-card">
+
+      <div class="card-image {% if post.category %}cat-img-{{ post.category | downcase | replace: '.', '' | replace: ' ', '-' }}{% endif %}">
+        {% if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.title }}">
+        {% endif %}
+      </div>
+
+      <div class="card-body">
+        <div class="card-category {% if post.category %}cat-{{ post.category | downcase | replace: '.', '' | replace: ' ', '-' }}{% endif %}">
+          {{ post.category | upcase }}{% if post.read_time %} · {{ post.read_time }} MIN READ{% endif %}
+        </div>
+        <div class="card-title">{{ post.title }}</div>
+        <div class="card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</div>
+        <div class="card-meta">
+          {% assign diff = 'now' | date: '%s' | minus: post.date_published %}
+          {% if diff < 86400 %}
+            {{ diff | divided_by: 3600 }} hours ago
+          {% elsif diff < 172800 %}
+            Yesterday
+          {% else %}
+            {{ post.date | date: "%B %-d, %Y" }}
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<!-- ── PAGINATION ── -->
+{% if paginator.total_pages > 1 %}
+<div class="load-more">
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}">
+      <button class="load-more-btn">Load more stories</button>
+    </a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endif %}

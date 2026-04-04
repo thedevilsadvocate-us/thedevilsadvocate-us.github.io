@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} | The Devil's Advocate{% else %}The Devil's Advocate{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | truncate: 160 }}{% else %}Stirring the pot, one story at a time.{% endif %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --brand-red:       #8b1a1a;
+      --brand-red-dark:  #6b1212;
+      --brand-red-dim:   #3d0a0a;
+      --bg-base:         #0f0b0b;
+      --bg-topbar:       #1a1210;
+      --bg-navbar:       #141010;
+      --bg-datebar:      #120e0e;
+      --bg-card:         #130e0e;
+      --bg-footer:       #0c0808;
+      --bg-take:         #1e0a0a;
+      --border:          #2a1818;
+      --border-light:    #2e1a18;
+      --text-primary:    #e8d8d8;
+      --text-secondary:  #6a5050;
+      --text-muted:      #4a3230;
+      --text-very-muted: #3a2828;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--text-primary); }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--bg-topbar);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 0.5px solid var(--border-light);
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--brand-red);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-tagline {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.16em;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .topbar-right {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── NAV ── */
+    .navbar {
+      background: var(--bg-navbar);
+      padding: 0 40px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      border-bottom: 0.5px solid var(--border);
+      scrollbar-width: none;
+    }
+
+    .navbar::-webkit-scrollbar { display: none; }
+
+    .nav-item {
+      padding: 13px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .nav-item:hover { color: #c8a0a0; }
+    .nav-item.active { color: var(--brand-red); border-bottom: 2px solid var(--brand-red); }
+
+    /* ── DATE BAR ── */
+    .datebar {
+      background: var(--bg-datebar);
+      padding: 7px 40px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .datebar span {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .site-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 40px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--bg-footer);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 0.5px solid var(--border);
+      margin-top: 48px;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--brand-red);
+      font-weight: 500;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--text-very-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-label span {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    /* ── ARTICLE GRID ── */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .article-card {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 0.5px solid var(--border);
+      background: var(--bg-card);
+      transition: border-color 0.15s;
+    }
+
+    .article-card:hover { border-color: var(--brand-red-dark); }
+
+    .card-image {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.2);
+      background: #1a0f0f;
+      overflow: hidden;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body { padding: 14px; }
+
+    .card-category {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.38;
+      margin-bottom: 7px;
+    }
+
+    .card-excerpt {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .card-meta {
+      font-size: 10px;
+      color: var(--text-very-muted);
+    }
+
+    /* ── FEATURED ── */
+    .featured-story {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .featured-image {
+      border-radius: 10px;
+      min-height: 240px;
+      background: #1a0f0f;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.2);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .badge-breaking { background: #3d0a0a; color: #c05050; }
+    .badge-category { background: #1e0a0a; color: var(--brand-red); }
+
+    .featured-read-time {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .featured-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+      margin-bottom: 12px;
+    }
+
+    .featured-excerpt {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .da-take {
+      background: var(--bg-take);
+      border-left: 3px solid var(--brand-red);
+      padding: 11px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #a06060;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .da-take strong {
+      color: var(--brand-red);
+      font-weight: 500;
+    }
+
+    .featured-date {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── LOAD MORE ── */
+    .load-more {
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+
+    .load-more-btn {
+      font-size: 12px;
+      padding: 10px 36px;
+      border-radius: 6px;
+      background: var(--brand-red);
+      color: #f0d0d0;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.15s;
+    }
+
+    .load-more-btn:hover { background: var(--brand-red-dark); }
+
+    /* ── CATEGORY COLOR MAP ── */
+    .cat-politics   { color: #4d8ede; }
+    .cat-world      { color: #a06de0; }
+    .cat-culture    { color: #e09040; }
+    .cat-health     { color: #3dba78; }
+    .cat-technology { color: #5a9ee8; }
+    .cat-us         { color: #e05a5a; }
+    .cat-travel     { color: #c8842a; }
+    .cat-earth      { color: #2db870; }
+    .cat-arts       { color: #b06ada; }
+    .cat-sport      { color: #e8c840; }
+    .cat-business   { color: #60c8b0; }
+    .cat-news       { color: #c8c8e8; }
+
+    .cat-img-politics   { background: linear-gradient(135deg, #0d2240, #1a4080); }
+    .cat-img-world      { background: linear-gradient(135deg, #2d0f50, #5a2090); }
+    .cat-img-culture    { background: linear-gradient(135deg, #3d1a00, #804010); }
+    .cat-img-health     { background: linear-gradient(135deg, #0a2e1c, #0f5c38); }
+    .cat-img-technology { background: linear-gradient(135deg, #0a1f3d, #103570); }
+    .cat-img-us         { background: linear-gradient(135deg, #3d0a0a, #7a1515); }
+    .cat-img-travel     { background: linear-gradient(135deg, #2a1500, #5a3500); }
+    .cat-img-earth      { background: linear-gradient(135deg, #081e12, #0d3d22); }
+    .cat-img-arts       { background: linear-gradient(135deg, #1e0830, #3d1060); }
+    .cat-img-sport      { background: linear-gradient(135deg, #2a2000, #504000); }
+    .cat-img-business   { background: linear-gradient(135deg, #082020, #104040); }
+    .cat-img-news       { background: linear-gradient(135deg, #1a1020, #302040); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .topbar, .navbar, .datebar, .site-body, .footer { padding-left: 20px; padding-right: 20px; }
+      .featured-story { grid-template-columns: 1fr; }
+      .article-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .featured-title { font-size: 20px; }
+    }
+
+    @media (max-width: 520px) {
+      .article-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div>
+      <a href="/"><div class="brand-name">The Devil's Advocate</div></a>
+      <div class="brand-tagline">Stirring the pot, one story at a time</div>
+    </div>
+    <div class="topbar-right" id="live-date"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="navbar">
+    <a href="/" class="nav-item {% if page.url == '/' %}active{% endif %}">Home</a>
+    <a href="/category/news" class="nav-item {% if page.category == 'News' %}active{% endif %}">News</a>
+    <a href="/category/sport" class="nav-item {% if page.category == 'Sport' %}active{% endif %}">Sport</a>
+    <a href="/category/business" class="nav-item {% if page.category == 'Business' %}active{% endif %}">Business</a>
+    <a href="/category/technology" class="nav-item {% if page.category == 'Technology' %}active{% endif %}">Technology</a>
+    <a href="/category/health" class="nav-item {% if page.category == 'Health' %}active{% endif %}">Health</a>
+    <a href="/category/culture" class="nav-item {% if page.category == 'Culture' %}active{% endif %}">Culture</a>
+    <a href="/category/arts" class="nav-item {% if page.category == 'Arts' %}active{% endif %}">Arts</a>
+    <a href="/category/travel" class="nav-item {% if page.category == 'Travel' %}active{% endif %}">Travel</a>
+    <a href="/category/earth" class="nav-item {% if page.category == 'Earth' %}active{% endif %}">Earth</a>
+    <a href="/category/us" class="nav-item {% if page.category == 'U.S.' %}active{% endif %}">U.S.</a>
+  </nav>
+
+  <!-- Date bar -->
+  <div class="datebar">
+    <span id="datebar-date"></span>
+    <span>Latest stories updated hourly</span>
+  </div>
+
+  <!-- Page content -->
+  <main class="site-body">
+    {{ content }}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-brand">The Devil's Advocate</div>
+    <div class="footer-copy">© {% assign y = 'now' | date: '%Y' %}{{ y }} · Question everything</div>
+    <div class="footer-links">
+      <a href="https://facebook.com" target="_blank">Facebook</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const now = new Date();
+    const dateStr = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    document.getElementById('live-date').textContent = dateStr;
+    document.getElementById('datebar-date').textContent = dateStr.toUpperCase();
+  </script>
+
+</body>
+</html>

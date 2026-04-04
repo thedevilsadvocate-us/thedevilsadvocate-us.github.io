@@ -1,0 +1,142 @@
+---
+layout: default
+---
+
+<article>
+
+  <!-- Article header -->
+  <div style="max-width: 780px; margin: 0 auto 40px;">
+
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+      {% if page.category %}
+        <a href="/category/{{ page.category | downcase | replace: '.', '' | replace: ' ', '-' }}">
+          <span class="badge badge-category cat-{{ page.category | downcase | replace: '.', '' | replace: ' ', '-' }}">
+            {{ page.category }}
+          </span>
+        </a>
+      {% endif %}
+      {% if page.breaking %}
+        <span class="badge badge-breaking">Breaking</span>
+      {% endif %}
+      {% if page.read_time %}
+        <span style="font-size: 11px; color: var(--text-muted);">{{ page.read_time }} min read</span>
+      {% endif %}
+    </div>
+
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 500; color: var(--text-primary); line-height: 1.25; letter-spacing: -0.3px; margin-bottom: 18px;">
+      {{ page.title }}
+    </h1>
+
+    {% if page.excerpt %}
+    <p style="font-size: 17px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 20px; border-left: 3px solid var(--border); padding-left: 16px;">
+      {{ page.excerpt | strip_html }}
+    </p>
+    {% endif %}
+
+    <div style="display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); margin-bottom: 28px;">
+      <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--brand-red-dim); display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--brand-red); font-weight: 500;">
+        DA
+      </div>
+      <div>
+        <div style="font-size: 13px; font-weight: 500; color: var(--text-primary);">The Devil's Advocate</div>
+        <div style="font-size: 11px; color: var(--text-muted);">{{ page.date | date: "%B %-d, %Y" }}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Featured image -->
+  {% if page.image %}
+  <div style="max-width: 900px; margin: 0 auto 36px; border-radius: 10px; overflow: hidden; border: 0.5px solid var(--border);">
+    <img src="{{ page.image }}" alt="{{ page.title }}" style="width: 100%; display: block; max-height: 480px; object-fit: cover;">
+  </div>
+  {% endif %}
+
+  <!-- Article body -->
+  <div style="max-width: 780px; margin: 0 auto;">
+    <div class="article-body">
+      {{ content }}
+    </div>
+
+    <!-- Devil's Advocate take -->
+    {% if page.da_take %}
+    <div class="da-take" style="margin: 36px 0;">
+      <strong>Devil's Advocate take:</strong> {{ page.da_take }}
+    </div>
+    {% endif %}
+
+    <!-- Back link -->
+    <div style="margin-top: 48px; padding-top: 20px; border-top: 0.5px solid var(--border);">
+      <a href="/" style="font-size: 13px; color: var(--brand-red); display: inline-flex; align-items: center; gap: 6px;">
+        ← Back to all stories
+      </a>
+    </div>
+
+  </div>
+
+</article>
+
+<style>
+  .article-body {
+    font-size: 17px;
+    color: #c8b8b8;
+    line-height: 1.8;
+  }
+
+  .article-body p {
+    margin-bottom: 22px;
+  }
+
+  .article-body h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 36px 0 16px;
+  }
+
+  .article-body h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 28px 0 12px;
+  }
+
+  .article-body blockquote {
+    border-left: 3px solid var(--brand-red);
+    padding: 10px 18px;
+    margin: 28px 0;
+    background: var(--bg-take);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: #a06060;
+  }
+
+  .article-body a {
+    color: var(--brand-red);
+    text-decoration: underline;
+    text-decoration-color: var(--brand-red-dim);
+  }
+
+  .article-body a:hover {
+    color: #c04040;
+  }
+
+  .article-body strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .badge-breaking { background: #3d0a0a; color: #c05050; }
+  .badge-category { background: #1e0a0a; color: var(--brand-red); }
+</style>
