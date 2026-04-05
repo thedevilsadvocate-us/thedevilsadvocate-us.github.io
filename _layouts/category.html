@@ -1,0 +1,45 @@
+---
+layout: default
+---
+
+{% assign category_posts = site.posts | where: "category", page.category %}
+
+<div style="margin-bottom: 28px;">
+  <div class="section-label">
+    <span>{{ page.title | upcase }}</span>
+    <div class="section-line"></div>
+  </div>
+  <div style="font-size: 13px; color: var(--text-muted);">
+    {{ category_posts.size }} article{% if category_posts.size != 1 %}s{% endif %}
+  </div>
+</div>
+
+{% if category_posts.size > 0 %}
+<div class="article-grid">
+  {% for post in category_posts %}
+  <a href="{{ post.url }}" style="text-decoration: none;">
+    <div class="article-card">
+      <div class="card-image {% if post.category %}cat-img-{{ post.category | downcase | replace: '.', '' | replace: ' ', '-' }}{% endif %}">
+        {% if post.image %}
+          <img src="{{ post.image }}" alt="{{ post.title }}">
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <div class="card-category cat-{{ post.category | downcase | replace: '.', '' | replace: ' ', '-' }}">
+          {{ post.category | upcase }}{% if post.read_time %} · {{ post.read_time }} MIN READ{% endif %}
+        </div>
+        <div class="card-title">{{ post.title }}</div>
+        <div class="card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</div>
+        <div class="card-meta">{{ post.date | date: "%B %-d, %Y" }}</div>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 60px 0; color: var(--text-muted);">
+  <div style="font-size: 32px; margin-bottom: 16px;">📰</div>
+  <div style="font-size: 16px; margin-bottom: 8px; color: var(--text-secondary);">No articles yet</div>
+  <div style="font-size: 13px;">Check back soon — new stories are added every 2 hours.</div>
+</div>
+{% endif %}

@@ -46,21 +46,8 @@ layout: default
     {% endif %}
 
     <div class="featured-date">
-      {{ featured.date | date: "%B %-d, %Y" }}
-      {% if featured.date %}
-        &middot;
-        {% assign diff_seconds = 'now' | date: '%s' | minus: featured.date_published %}
-        {% if diff_seconds < 3600 %}
-          Just now
-        {% elsif diff_seconds < 86400 %}
-          {{ diff_seconds | divided_by: 3600 }} hours ago
-        {% elsif diff_seconds < 172800 %}
-          Yesterday
-        {% else %}
-          {{ diff_seconds | divided_by: 86400 }} days ago
-        {% endif %}
-      {% endif %}
-    </div>
+  {{ featured.date | date: "%B %-d, %Y" }}
+</div>
   </div>
 
 </div>
@@ -90,16 +77,7 @@ layout: default
         </div>
         <div class="card-title">{{ post.title }}</div>
         <div class="card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</div>
-        <div class="card-meta">
-          {% assign diff = 'now' | date: '%s' | minus: post.date_published %}
-          {% if diff < 86400 %}
-            {{ diff | divided_by: 3600 }} hours ago
-          {% elsif diff < 172800 %}
-            Yesterday
-          {% else %}
-            {{ post.date | date: "%B %-d, %Y" }}
-          {% endif %}
-        </div>
+        <div class="card-meta">{{ post.date | date: "%B %-d, %Y" }}</div>
       </div>
 
     </div>
