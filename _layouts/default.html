@@ -449,12 +449,40 @@
   </footer>
 
   <script>
+    // ── Live date display ──
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const now = new Date();
     const dateStr = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
     document.getElementById('live-date').textContent = dateStr;
     document.getElementById('datebar-date').textContent = dateStr.toUpperCase();
+
+    // ── Dynamic "time ago" display ──
+    function timeAgo(dateStr) {
+      const posted = new Date(dateStr);
+      const now = new Date();
+      const diffMs = now - posted;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 60) return diffMins + ' minute' + (diffMins !== 1 ? 's' : '') + ' ago';
+      if (diffHours < 24) return diffHours + ' hour' + (diffHours !== 1 ? 's' : '') + ' ago';
+      if (diffDays === 1) return 'Yesterday';
+      if (diffDays < 7) return diffDays + ' days ago';
+      return null;
+    }
+
+    document.querySelectorAll('[data-date]').forEach(function(el) {
+      const dateStr = el.getAttribute('data-date');
+      const formatted = el.getAttribute('data-formatted');
+      const ago = timeAgo(dateStr);
+      if (ago) {
+        el.textContent = formatted + ' · ' + ago;
+      } else {
+        el.textContent = formatted;
+      }
+    });
   </script>
 
 </body>

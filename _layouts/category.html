@@ -30,7 +30,11 @@ layout: default
         </div>
         <div class="card-title">{{ post.title }}</div>
         <div class="card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</div>
-        <div class="card-meta">{{ post.date | date: "%B %-d, %Y" }}</div>
+        <div class="card-meta"
+          data-date="{{ post.date | date_to_xmlschema }}"
+          data-formatted="{{ post.date | date: '%B %-d, %Y' }}">
+          {{ post.date | date: "%B %-d, %Y" }}
+        </div>
       </div>
     </div>
   </a>
