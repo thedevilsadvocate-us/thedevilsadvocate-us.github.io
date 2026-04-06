@@ -6,7 +6,7 @@ category: Earth
 read_time: 4
 excerpt: "An exploration of how human activities drive global temperature increases and the complex challenges societies face in balancing environmental stability with economic growth."
 da_take: "While the scientific consensus on human-induced warming is robust, the public discourse often sidesteps the immense logistical and ethical hurdles of a global transition. We frequently frame the solution as a simple choice between 'green' and 'dirty' energy, yet we rarely interrogate whether the current technological roadmap can support the energy needs of the developing world without entrenching new forms of economic dependency. Is the global strategy truly about saving the planet, or is it a new framework for geopolitical influence that risks leaving the world’s poorest behind?"
-image: "https://web.koprabuh.com/wp-content/uploads/2023/05/127561011_climate_5_cc_index_and_article_image_template_976-ncclimate_change_article_image_template_976-nc.png.webp"
+image: "https://media.istockphoto.com/id/1460770099/photo/climate-says-big-newspaper-headline-with-text-about-finding-solutions-to-global-warming-using.jpg?s=612x612&w=0&k=20&c=DaN-ip-QRjhHOhTcH5sQf4VvWnGySPMWxvL3qiWKiC0="
 image_alt: "What is climate change? A really simple guide – KOPRABUH"
 ---
 
