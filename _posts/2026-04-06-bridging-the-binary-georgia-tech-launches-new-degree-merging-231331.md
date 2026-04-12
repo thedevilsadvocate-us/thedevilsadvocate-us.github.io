@@ -6,7 +6,7 @@ category: Arts
 read_time: 4
 excerpt: "Georgia Tech’s new Bachelor of Science in Arts, Entertainment, and Creative Technologies aims to prepare students for the rapidly evolving landscape of immersive media and digital design."
 da_take: "While Georgia Tech positions this degree as a forward-thinking response to a shifting economy, we must ask if this is truly an 'arts' degree or simply a specialized training pipeline for corporate entertainment giants. By framing creative expression through the lens of technical proficiency and marketability, do we risk reducing the intrinsic value of art to its utility in software and themed environments? We should consider whether the 'creative technologist' is a new kind of visionary or merely a high-tech craftsman built to serve the bottom line of the experience economy."
-image: "https://news.gatech.edu/sites/default/files/hg_media/2025-13/filewjtQiv"
+image: "https://th.bing.com/th/id/R.836cd15ef3a4b1ad8997628a3c1a8619?rik=iIJfXCSjp0oBag&riu=http%3a%2f%2fwww.gatech.edu%2fsites%2fdefault%2ffiles%2fstyles%2flarge%2fpublic%2fhg_media%2f2025-13%2ffileUynBFB%3fitok%3d2k31l91X&ehk=HQiZ%2b17EadqRaZig5qtUPXTDPIr8QifP1e1JkBAtmZ8%3d&risl=&pid=ImgRaw&r=0"
 image_alt: "Georgia Tech Launches Arts, Entertainment, and Creative ..."
 ---
 
